@@ -13,7 +13,8 @@ namespace API_Cultivate.Services
 
         public UserRepository()
         {
-            var settings = new ConnectionSettings(new Uri("http://localhost.fiddler:9200")).DefaultIndex("users");
+            //TODO remove fiddler when making the build
+            var settings = new ConnectionSettings(new Uri("http://localhost:9200")).DefaultIndex("users");
             _client = new ElasticClient(settings);
         }
 

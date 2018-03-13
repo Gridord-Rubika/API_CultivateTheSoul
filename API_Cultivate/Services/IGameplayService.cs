@@ -8,6 +8,7 @@ namespace API_Cultivate.Services
 {
     public interface IGameplayService
     {
-        Task<int> Cultivate(Player player);
+        Task<int> ClicksCheck(Player player, int clicksDone);
+        Task<bool> BreakThrough(Player player);
     }
 }

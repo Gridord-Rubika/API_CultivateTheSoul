@@ -14,8 +14,6 @@ namespace API_Cultivate.Controllers
     [Route("api/Player")]
     public class PlayerController : Controller
     {
-
-        private readonly ElasticClient _client = new ElasticClient(new ConnectionSettings().DefaultIndex("players"));
         private readonly IUserService _userService;
         private readonly IPlayerService _playerService;
 
@@ -24,8 +22,7 @@ namespace API_Cultivate.Controllers
             _userService = userService;
             _playerService = playerService;
         }
-
-        // GET: api/GamePlay/5
+        
         [HttpGet("{id}")]
         public async Task<IActionResult> Get(string id)
         {
@@ -48,9 +45,8 @@ namespace API_Cultivate.Controllers
             }
         }
         
-        // PUT: api/GamePlay/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(string id, [FromBody]Player value)
+        public async Task<IActionResult> Put(string id)
         {
             var validation = await Validate(id);
 
@@ -58,12 +54,12 @@ namespace API_Cultivate.Controllers
             {
                 return validation;
             }
-
+            
             var player = await _playerService.GetPlayer(id);
             if (player == null)
             {
                 player = await _playerService.CreatePlayer(id);
-                return Ok();
+                return Ok(player);
             }
             else
             {

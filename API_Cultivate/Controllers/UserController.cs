@@ -70,7 +70,7 @@ namespace API_Cultivate.Controllers
             {
                 return StatusCode(403);
             }
-            
+
         }
 
     }

@@ -26,11 +26,12 @@ namespace API_Cultivate
         {
             services.AddMvc();
             services
-                .AddScoped<IGameplayService>(serviceProvider => new GameplayService(serviceProvider.GetService<IPlayerRepository>()))
+                .AddScoped<IGameplayService>(serviceProvider => new GameplayService(serviceProvider.GetService<IPlayerRepository>(), serviceProvider.GetService<IRandomService>()))
                 .AddScoped<IPlayerService>(serviceProvider => new PlayerService(serviceProvider.GetService<IPlayerRepository>()))
                 .AddScoped<IUserService>(serviceProvider => new UserService(serviceProvider.GetService<IUserRepository>()))
                 .AddScoped<IPlayerRepository>(serviceProvider => new PlayerRepository())
-                .AddScoped<IUserRepository>(serviceProvider => new UserRepository());
+                .AddScoped<IUserRepository>(serviceProvider => new UserRepository())
+                .AddScoped<IRandomService>(serviceProvider => new RandomService());
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

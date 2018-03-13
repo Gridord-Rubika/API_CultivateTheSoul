@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API_Cultivate.Controllers
 {
     [Produces("application/json")]
-    [Route("api/Gameplay/{action}")]
+    [Route("api/Gameplay/[action]")]
     public class GameplayController : Controller
     {
         private readonly IGameplayService _gameplayService;
@@ -25,7 +25,7 @@ namespace API_Cultivate.Controllers
         }
 
         [HttpPost("{id}")]
-        public async Task<IActionResult> Cultivate(string id)
+        public async Task<IActionResult> ClicksCheck(string id, [FromBody] int clicks)
         {
             var validation = await Validate(id);
 
@@ -37,7 +37,7 @@ namespace API_Cultivate.Controllers
             Player player = await _playerService.GetPlayer(id);
             if (player != null)
             {
-                var result = await _gameplayService.Cultivate(player);
+                var result = await _gameplayService.ClicksCheck(player, clicks);
                 return Ok(result);
             }
             else
@@ -45,7 +45,29 @@ namespace API_Cultivate.Controllers
                 return NotFound();
             }
         }
-        
+
+        [HttpPost("{id}")]
+        public async Task<IActionResult> BreakThrough(string id)
+        {
+            var validation = await Validate(id);
+
+            if (validation != null)
+            {
+                return validation;
+            }
+
+            Player player = await _playerService.GetPlayer(id);
+            if (player != null)
+            {
+                var result = await _gameplayService.BreakThrough(player);
+                return Ok(result);
+            }
+            else
+            {
+                return NotFound();
+            }
+        }
+
         private async Task<IActionResult> Validate(string id)
         {
             HttpContext.Request.Headers.TryGetValue("x-token", out var tokenValues);

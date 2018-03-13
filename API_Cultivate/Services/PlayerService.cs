@@ -13,7 +13,6 @@ namespace API_Cultivate.Services
         public PlayerService(IPlayerRepository repository)
         {
             _repository = repository;
-
         }
 
         public async Task<Player> CreatePlayer(string id)
@@ -28,7 +27,7 @@ namespace API_Cultivate.Services
             var player = await _repository.GetPlayer(id);
             if (player != null)
             {
-                return new Player { Id = id };
+                return player;
             }
             else
             {
